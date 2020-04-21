@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import AppBar from 'material-ui/AppBar'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
+import AppBar from '@material-ui/core/AppBar'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 type values = {
     firstName: string;
@@ -25,35 +24,26 @@ export default class FormUserDetails extends Component <{ values: values, nextSt
     render() {
         const {values, handleChange} = this.props;
         return (
-            <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title='Enter user details'/>
                     <TextField
-                        hintText="Enter Your First Name"
-                        floatingLabelText='Firstname'
+                        label='First name'
                         onChange={handleChange('firstName')}
                         defaultValue={values.firstName}
                     /><br/>
                     <TextField
-                        hintText="Enter Your Last Name"
-                        floatingLabelText='Lastname'
                         onChange={handleChange('lastName')}
                         defaultValue={values.lastName}
                     /><br/>
                     <TextField
-                        hintText="Enter Your Email"
-                        floatingLabelText='Email'
                         onChange={handleChange('email')}
                         defaultValue={values.email}
                     /><br/>
-                    <RaisedButton
-                        label="Continue"
-                        primary={true}
-                        style={styles.button}
+                    <Button
+                        color="primary"
                         onClick={this.continue}
-                    />
+                    >Continue</Button>
                 </React.Fragment>
-            </MuiThemeProvider>
         );
     };
 }

@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import AppBar from 'material-ui/AppBar'
-import { List, ListItem } from 'material-ui/List'
-import RaisedButton from 'material-ui/RaisedButton'
+import AppBar from '@material-ui/core/AppBar'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Button from '@material-ui/core/Button'
 
 type values = {
     firstName: string;
@@ -34,54 +35,28 @@ export default class Confirm extends Component <{ values: values, nextStep: any,
     render() {
         const { values: { firstName, lastName, email, occupation, city, bio } } = this.props;
         return (
-            <MuiThemeProvider>
                 <React.Fragment>
                     <AppBar title='Confirm'/>
                     <List>
-                        <ListItem
-                            primaryText='First Name'
-                            secondaryText={ firstName }
-                        />
-                        <ListItem
-                            primaryText='First Name'
-                            secondaryText={ firstName }
-                        />
-                        <ListItem
-                            primaryText='Last Name'
-                            secondaryText={ lastName }
-                        />
-                        <ListItem
-                            primaryText='Email'
-                            secondaryText={ email }
-                        />
-                        <ListItem
-                            primaryText='Occupation'
-                            secondaryText={ occupation }
-                        />
-                        <ListItem
-                            primaryText='City'
-                            secondaryText={ city }
-                        />
-                        <ListItem
-                            primaryText='Bio'
-                            secondaryText={ bio }
-                        />
+                        <ListItem><ListItemText primary={`Item ${firstName}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Item ${lastName}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Item ${email}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Item ${occupation}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Item ${city}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Item ${bio}`} /></ListItem>
                     </List>
 
-                    <RaisedButton
-                        label="Back"
-                        primary={false}
+                    <Button
+                        color="secondary"
                         style={styles.button}
                         onClick={this.back}
-                    />
-                    <RaisedButton
-                        label="Confirm"
-                        primary={true}
+                    >Back</Button>
+                    <Button
+                        color="primary"
                         style={styles.button}
                         onClick={this.continue}
-                    />
+                    >Confirm</Button>
                 </React.Fragment>
-            </MuiThemeProvider>
         );
     };
 }
