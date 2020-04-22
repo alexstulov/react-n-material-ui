@@ -38,12 +38,12 @@ export default class Confirm extends Component <{ values: values, nextStep: any,
                 <React.Fragment>
                     <AppBar title='Confirm'/>
                     <List>
-                        <ListItem><ListItemText primary={`Item ${firstName}`} /></ListItem>
-                        <ListItem><ListItemText primary={`Item ${lastName}`} /></ListItem>
-                        <ListItem><ListItemText primary={`Item ${email}`} /></ListItem>
-                        <ListItem><ListItemText primary={`Item ${occupation}`} /></ListItem>
-                        <ListItem><ListItemText primary={`Item ${city}`} /></ListItem>
-                        <ListItem><ListItemText primary={`Item ${bio}`} /></ListItem>
+                        <ListItem><ListItemText primary={`First name: ${firstName}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Last name: ${lastName}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Email: ${email}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Occupation: ${occupation}`} /></ListItem>
+                        <ListItem><ListItemText primary={`City: ${city}`} /></ListItem>
+                        <ListItem><ListItemText primary={`Bio: ${bio}`} /></ListItem>
                     </List>
 
                     <Button

@@ -32,14 +32,17 @@ export default class FormPersonalDetails extends Component <{ values: values, ne
                 <React.Fragment>
                     <AppBar title='Enter personal details'/>
                     <TextField
+                        label='Occupation'
                         onChange={handleChange('occupation')}
                         defaultValue={values.occupation}
                     /><br/>
                     <TextField
+                        label='City'
                         onChange={handleChange('city')}
                         defaultValue={values.city}
                     /><br/>
                     <TextField
+                        label='Bio'
                         onChange={handleChange('bio')}
                         defaultValue={values.bio}
                     /><br/>

@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 
-import FormUserDetails from './FormUserDetails';
-import FormPersonalDetails from "./FormPersonalDetails";
-import Confirm from "./Confirm";
-import Success from "./Success";
+import FormUserDetails from '../components/multi-step-form/FormUserDetails';
+import FormPersonalDetails from "../components/multi-step-form/FormPersonalDetails";
+import Confirm from "../components/multi-step-form/Confirm";
+import Success from "../components/multi-step-form/Success";
 
 interface IProps {
 

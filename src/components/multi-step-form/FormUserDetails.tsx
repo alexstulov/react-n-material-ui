@@ -32,10 +32,12 @@ export default class FormUserDetails extends Component <{ values: values, nextSt
                         defaultValue={values.firstName}
                     /><br/>
                     <TextField
+                        label='Last name'
                         onChange={handleChange('lastName')}
                         defaultValue={values.lastName}
                     /><br/>
                     <TextField
+                        label='Email'
                         onChange={handleChange('email')}
                         defaultValue={values.email}
                     /><br/>
