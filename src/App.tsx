@@ -1,10 +1,6 @@
 import React from 'react';
 
 import './App.css';
-import UserForm from "./pages/UserForm";
-import PromiseComponent from './pages/PromiseComponent';
-import GithubProfile from "./pages/GithubProfile";
-import Error from './components/Error';
 import AppBar from '@material-ui/core/AppBar'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu';
@@ -12,10 +8,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Link } from 'react-router-dom';
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Theme, createStyles, makeStyles } from '@material-ui/core';
+import { Link, BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import UserForm from "./pages/UserForm";
+import PromiseComponent from './pages/PromiseComponent';
+import GithubProfile from "./pages/GithubProfile";
+import TodoList from "./pages/TodoApp";
+import Error from './components/Error';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     appBar: {
@@ -64,6 +64,7 @@ const App: React.FC<{}> = () => {
                             <MenuItem onClick={toggleMenu}><Link to="/promise">Promise</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/user-form">Multi-step form</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/github-profile">Github profile</Link></MenuItem>
+                            <MenuItem onClick={toggleMenu}><Link to="/todo-list">Todo List</Link></MenuItem>
                         </Menu>
                         <Typography variant="h6" className={classes.title}>MaterialUI & TypeScript</Typography>
                     </Toolbar>
@@ -75,6 +76,7 @@ const App: React.FC<{}> = () => {
                     <Route path="/promise" component={PromiseComponent} />
                     <Route path="/user-form" component={UserForm} />
                     <Route path="/github-profile" component={GithubProfile} />
+                    <Route path="/todo-list" component={TodoList} />
                     <Route component={Error} />
                 </Switch>
             </main>
