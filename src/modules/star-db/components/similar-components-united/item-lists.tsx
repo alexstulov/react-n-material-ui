@@ -4,7 +4,6 @@ import ItemList from '../item-list';
 import {withData, withSwapiService} from '../hoc-helpers';
 
 import {compose} from '../../utils';
-import { PersonType, PlanetType, StarshipType } from '../../services/swapi-service';
 
 const withChildFunction = (fn: (item: any) => any) => (Wrapped: React.FC<any>) => {
     return (props: any) => {
@@ -12,7 +11,7 @@ const withChildFunction = (fn: (item: any) => any) => (Wrapped: React.FC<any>) =
     }
 }
 
-const renderPerson = (item: PersonType) => <span>{item.name} ({item.birthYear}, {item.eyeColor})<button>!</button></span>;
+const renderPerson = (item: any) => <span>{item.name} ({item.birthYear}, {item.eyeColor})<button>!</button></span>;
 
 const mapPersonMethodsToProps = (swapiService: any) => {
     return {
@@ -20,7 +19,7 @@ const mapPersonMethodsToProps = (swapiService: any) => {
     }
 }
 
-const PersonList = compose(
+const PersonList = compose( 
     withSwapiService(mapPersonMethodsToProps),
     withData,
     withChildFunction(renderPerson)

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Row from '../row';
 import { PersonList } from '../similar-components-united';
+import PersonDetails from '../similar-components-united/person-details';
 
 const PeoplePage = () => {
     const [selectedItem, setSelectedItem] = useState(-1);
@@ -10,17 +11,9 @@ const PeoplePage = () => {
     }
 
     return (
-        <>
-            <h1>People Page</h1>
-            <Row
-                // left={<>
-                //     <button onClick={() => onItemSelected(1)}>1</button>
-                //     <button onClick={() => onItemSelected(2)}>2</button>
-                //     <button onClick={() => onItemSelected(3)}>3</button>
-                // </>}
+        <Row
                 left={<PersonList onItemSelected={onItemSelected}/>}
-                right={<span>world: {selectedItem}</span>} />
-        </>
+                right={<PersonDetails itemId={selectedItem}/>} />
     );
 }
 
