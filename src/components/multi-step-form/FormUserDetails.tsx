@@ -9,12 +9,6 @@ type values = {
     email: string;
 };
 
-const styles = {
-    button: {
-        margin: 15
-    }
-};
-
 export default class FormUserDetails extends Component <{ values: values, nextStep: any, prevStep: any, handleChange: any }, {}> {
     continue = (e: any) => {
         e.preventDefault()

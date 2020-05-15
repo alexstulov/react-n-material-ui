@@ -17,6 +17,8 @@ import GithubProfile from "./pages/GithubProfile";
 import TodoList from "./pages/TodoApp";
 import Error from './components/Error';
 
+import modules from './modules';
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
     appBar: {
         marginBottom: '15px'
@@ -44,15 +46,34 @@ const App: React.FC<{}> = () => {
         setShowMenu(!showMenu);
     }
 
+    interface ModuleType {
+        routes: Array<{
+            routeProps: {
+                path: string,
+                exact: boolean
+                component: React.FC
+            },
+            name: string
+        }>
+    }
+
+    let moduleRoutes: Array<any> = [];
+    for (let i = 0; i < modules.length; i+=1) {
+        const module = modules[i]();
+        module.routes.forEach((route: any): void => {
+            moduleRoutes.push(<Route key={route.name} {...route.routeProps} />);
+        });      
+    }
+
     return (
         <BrowserRouter>
             <header>
                 <AppBar title="Main menu" position="static" className={classes.appBar}>
                     <Toolbar>
                         <span ref={newRef}>
-                        <IconButton edge="start" className={classes.menuButton} onClick={toggleMenu} color="inherit" aria-label="menu">
-                            <MenuIcon />
-                        </IconButton>
+                            <IconButton edge="start" className={classes.menuButton} onClick={toggleMenu} color="inherit" aria-label="menu">
+                                <MenuIcon />
+                            </IconButton>
                         </span>
                         <Menu
                             id="simple-menu"
@@ -65,6 +86,7 @@ const App: React.FC<{}> = () => {
                             <MenuItem onClick={toggleMenu}><Link to="/user-form">Multi-step form</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/github-profile">Github profile</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/todo-list">Todo List</Link></MenuItem>
+                            <MenuItem onClick={toggleMenu}><Link to="/star-db">Star Data Base</Link></MenuItem>
                         </Menu>
                         <Typography variant="h6" className={classes.title}>MaterialUI & TypeScript</Typography>
                     </Toolbar>
@@ -77,6 +99,7 @@ const App: React.FC<{}> = () => {
                     <Route path="/user-form" component={UserForm} />
                     <Route path="/github-profile" component={GithubProfile} />
                     <Route path="/todo-list" component={TodoList} />
+                    {moduleRoutes}
                     <Route component={Error} />
                 </Switch>
             </main>
