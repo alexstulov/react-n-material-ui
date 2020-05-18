@@ -18,7 +18,7 @@ const Header = ({
         <ul className="navbar-nav mr-auto">
           {routes.map((route) => {
             return (
-              <li className="nav-item active">
+              <li key={route.name} className="nav-item active">
                 <Link className="nav-link" to={route.path}>
                   {route.name}
                 </Link>
