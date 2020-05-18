@@ -9,7 +9,7 @@ interface ItemListType {
 
 const ItemList = ({data, onItemSelected = () => {console.log('onItemSelected is not provided');}, children}: ItemListType) => { 
     return (
-        <ul>{
+        <ul className="item-list">{
             data.map((item) => (<li key={item.id} className="list-group-item" onClick={() => onItemSelected(item.id)}>
                 {children(item)}
             </li>))

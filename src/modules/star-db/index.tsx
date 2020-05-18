@@ -10,6 +10,20 @@ import SwapiService from './services/swapi-service';
 import DummySwapiService from './services/dummy-swapi-service';
 import RandomPlanet from './components/random-planet';
 
+const basePath = '/star-db';
+const peoplePage = {
+    path: `${basePath}/`,
+    name: 'People'
+};
+const planetsPage = {
+    path: `${basePath}/planets`,
+    name: 'Planets'
+};
+const starshipsPage = {
+    path: `${basePath}/starships`,
+    name: 'Starships'
+};
+
 const starDbWrapper = (Page: any) => (props: any) => {
     const swService: SwapiService | DummySwapiService = new SwapiService();
     const [swapiService, setSwapiService] = useState<SwapiService | DummySwapiService>(swService);
@@ -25,7 +39,7 @@ const starDbWrapper = (Page: any) => (props: any) => {
         <ErrorBoundary>
             <SwapiServiceProvider value={swapiService}>
                 <div className="stardb-app">
-                    <Header onServiceChange={onServiceChange}/>
+                    <Header onServiceChange={onServiceChange} routes={[peoplePage, planetsPage, starshipsPage]}/>
                     <RandomPlanet/>
                     <Page />
                 </div>
@@ -34,32 +48,35 @@ const starDbWrapper = (Page: any) => (props: any) => {
     )
 };
 
-export default (basePath = '/star-db') => ({
-    name: 'Star DB',
-    routes: [
-        {
-            routeProps: {
-                path: `${basePath}/`,
-                exact: true,
-                component: starDbWrapper(PeoplePage)
+export default () => {
+
+    return {
+        name: 'Star DB',
+        routes: [
+            {
+                routeProps: {
+                    path: peoplePage.path,
+                    exact: true,
+                    component: starDbWrapper(PeoplePage)
+                },
+                name: peoplePage.name
             },
-            name: 'People'
-        },
-        {
-            routeProps: {
-                path: `${basePath}/planets`,
-                exact: true,
-                component: starDbWrapper(PlanetsPage)
+            {
+                routeProps: {
+                    path: planetsPage.path,
+                    exact: true,
+                    component: starDbWrapper(PlanetsPage)
+                },
+                name: planetsPage.name
             },
-            name: 'Planets'
-        },
-        {
-            routeProps: {
-                path: `${basePath}/starships`,
-                exact: true,
-                component: starDbWrapper(StarshipsPage)
+            {
+                routeProps: {
+                    path: starshipsPage.path,
+                    exact: true,
+                    component: starDbWrapper(StarshipsPage)
+                },
+                name: starshipsPage.name
             },
-            name: 'Planets'
-        },
-    ]
-});
+        ]
+    };
+};
