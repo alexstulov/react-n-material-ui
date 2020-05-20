@@ -15,6 +15,7 @@ import UserForm from "./pages/UserForm";
 import PromiseComponent from './pages/PromiseComponent';
 import GithubProfile from "./pages/GithubProfile";
 import TodoList from "./pages/TodoApp";
+import Hooks from "./pages/Hooks";
 import Error from './components/Error';
 
 import modules from './modules';
@@ -83,6 +84,7 @@ const App: React.FC<{}> = () => {
                             onClose={toggleMenu}
                         >
                             <MenuItem onClick={toggleMenu}><Link to="/promise">Promise</Link></MenuItem>
+                            <MenuItem onClick={toggleMenu}><Link to="/react-hooks">React Hooks</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/user-form">Multi-step form</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/github-profile">Github profile</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/todo-list">Todo List</Link></MenuItem>
@@ -96,6 +98,7 @@ const App: React.FC<{}> = () => {
                 <Switch>
                     <Route path="/" component={UserForm} exact />
                     <Route path="/promise" component={PromiseComponent} />
+                    <Route path="/react-hooks" component={Hooks} />
                     <Route path="/user-form" component={UserForm} />
                     <Route path="/github-profile" component={GithubProfile} />
                     <Route path="/todo-list" component={TodoList} />
