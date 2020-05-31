@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
 import { Theme, createStyles, makeStyles } from '@material-ui/core';
 import { Link, BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -59,12 +60,26 @@ const App: React.FC<{}> = () => {
     }
 
     let moduleRoutes: Array<any> = [];
+    let moduleLinks: {[name: string]: React.ReactElement[]} = {'test': [<Link to="/">Test</Link>]};
     for (let i = 0; i < modules.length; i+=1) {
         const module = modules[i]();
-        module.routes.forEach((route: any): void => {
+        moduleLinks = {
+            [module.name]: []
+        };
+        module.routes.forEach((route: {name: string, routeProps: {path: string, exact: boolean}}): void => {
             moduleRoutes.push(<Route key={route.name} {...route.routeProps} />);
+            moduleLinks[module.name].push(<Link to={route.routeProps.path}>{route.name}</Link>);
         });      
     }
+
+    let moduleMenuItems: React.ReactElement[] = [<MenuItem>Hello</MenuItem>];
+    Object.keys(moduleLinks).forEach((moduleName) => {
+        moduleMenuItems = [];
+        moduleMenuItems.push(<Divider/>);
+        moduleLinks[moduleName].map((link) => {
+            moduleMenuItems.push(<MenuItem onClick={toggleMenu}>{link}</MenuItem>);
+        });
+    });
 
     return (
         <BrowserRouter>
@@ -88,7 +103,8 @@ const App: React.FC<{}> = () => {
                             <MenuItem onClick={toggleMenu}><Link to="/user-form">Multi-step form</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/github-profile">Github profile</Link></MenuItem>
                             <MenuItem onClick={toggleMenu}><Link to="/todo-list">Todo List</Link></MenuItem>
-                            <MenuItem onClick={toggleMenu}><Link to="/star-db">Star Data Base</Link></MenuItem>
+                            <MenuItem onClick={toggleMenu} disabled>StarDb</MenuItem>
+                            {moduleMenuItems}
                         </Menu>
                         <Typography variant="h6" className={classes.title}>MaterialUI & TypeScript</Typography>
                     </Toolbar>
