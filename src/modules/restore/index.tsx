@@ -1,26 +1,69 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
-import {BrowserRouter as Router} from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Route, Switch } from "react-router-dom";
+import ShopHeader from "./components/shop-header";
+import { HomePage, CartPage } from "./components/pages";
 
-import App from './components/app';
-import ErrorBoundary from './components/error-boundary';
-import BookStoreService from './services/book-store-service';
-import {BookStoreServiceProvider} from './components/book-store-service-context'
+import { Provider } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
 
-import store from './store';
+import ErrorBoundary from "./components/error-boundary";
+import BookStoreService from "./services/book-store-service";
+import { BookStoreServiceProvider } from "./components/book-store-service-context";
 
-const bookStoreService = new BookStoreService();
+import store from "./store";
 
-ReactDOM.render(
+import "./styles/bootstrap.min.css";
+
+const basePath = "/restore";
+const shopPage = {
+  path: `${basePath}/`,
+  name: "Shop",
+};
+const cartPage = {
+  path: `${basePath}/cart`,
+  name: "Cart",
+};
+
+const reStoreWrapper = (Page: any) => (props: any) => {
+  const bookStoreService = new BookStoreService();
+
+  return (
     <Provider store={store}>
-        <ErrorBoundary>
-            <BookStoreServiceProvider value={bookStoreService}>
-                <Router>
-                    <App/>
-                </Router>
-            </BookStoreServiceProvider>
-        </ErrorBoundary>
-    </Provider>,
-    document.getElementById('root')
-);
+      <ErrorBoundary>
+        <BookStoreServiceProvider value={bookStoreService}>
+          <Router>
+            <main role="main" className="container">
+              <ShopHeader numItems={5} total={210} />
+              <Page />
+            </main>
+          </Router>
+        </BookStoreServiceProvider>
+      </ErrorBoundary>
+    </Provider>
+  );
+};
+
+export default () => {
+    return {
+        name: "ReStore",
+        routes: [
+            {
+                routeProps: {
+                    path: shopPage.path,
+                    exact: true,
+                    component: reStoreWrapper(HomePage),
+                },
+                name: shopPage.name
+            },
+            {
+                routeProps: {
+                    path: cartPage.path,
+                    exact: true,
+                    component: reStoreWrapper(CartPage),
+                },
+                name: cartPage.name
+            }
+        ]
+    }
+}

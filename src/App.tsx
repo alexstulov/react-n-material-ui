@@ -1,17 +1,35 @@
 import React, { useEffect } from "react";
-
-import "./App.css";
+import clsx from "clsx";
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  createStyles,
+} from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuIcon from "@material-ui/icons/Menu";
-import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { Theme, createStyles, makeStyles } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import Collapse from "@material-ui/core/Collapse";
+import MailIcon from "@material-ui/icons/Mail";
 import { Link, Router, Route, Switch } from "react-router-dom";
-
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import DraftsIcon from "@material-ui/icons/Drafts";
+import SendIcon from "@material-ui/icons/Send";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import StarBorder from "@material-ui/icons/StarBorder";
 import UserForm from "./pages/UserForm";
 import PromiseComponent from "./pages/PromiseComponent";
 import GithubProfile from "./pages/GithubProfile";
@@ -28,23 +46,83 @@ import { PrivateRoute } from "./components/helpers";
 import { createBrowserHistory } from "history";
 const history = createBrowserHistory();
 
+const drawerWidth = 240;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    appBar: {
-      marginBottom: "15px",
+    root: {
+      display: "flex",
     },
-    menuButton: {
-      margin: theme.spacing(1),
+    appBar: {
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginBottom: "15px",
     },
     title: {
       flexGrow: 1,
     },
+    appBarShift: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      transition: theme.transitions.create(["margin", "width"], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    hide: {
+      display: "none",
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    drawerHeader: {
+      display: "flex",
+      alignItems: "center",
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: "flex-end",
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginLeft: -drawerWidth,
+    },
+    contentShift: {
+      transition: theme.transitions.create("margin", {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    },
+    nestedContainer: {
+      width: drawerWidth,
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
   })
 );
 
-const App: React.FC<{}> = () => {
+export default function PersistentDrawerLeft() {
   const classes = useStyles();
-  const [showMenu, setShowMenu] = React.useState(false);
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState(null);
 
   useEffect(() => {
@@ -56,14 +134,18 @@ const App: React.FC<{}> = () => {
     history.push("/login");
   };
 
-  const newRef = React.useRef<HTMLDivElement | null>(null);
-  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement | null>();
-  React.useEffect(() => {
-    setAnchorEl(newRef.current);
-  }, []);
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const [dropdown, setDropdown] = React.useState(true);
+
+  const handleClick = () => {
+    setDropdown(!dropdown);
   };
 
   interface ModuleType {
@@ -78,14 +160,10 @@ const App: React.FC<{}> = () => {
   }
 
   let moduleRoutes: Array<any> = [];
-  let moduleLinks: { [name: string]: React.ReactElement[] } = {
-    test: [<Link to="/">Test</Link>],
-  };
+  let moduleLinks: { [name: string]: React.ReactElement[] } = {};
   for (let i = 0; i < modules.length; i += 1) {
     const module = modules[i]();
-    moduleLinks = {
-      [module.name]: [],
-    };
+    moduleLinks[module.name] = [];
     module.routes.forEach(
       (route: {
         name: string;
@@ -101,96 +179,171 @@ const App: React.FC<{}> = () => {
     );
   }
 
-  let moduleMenuItems: React.ReactElement[] = [<MenuItem>Hello</MenuItem>];
+  let moduleMenuLists: React.ReactElement[] = [];
   Object.keys(moduleLinks).forEach((moduleName) => {
-    moduleMenuItems = [];
-    moduleMenuItems.push(<Divider />);
-    moduleLinks[moduleName].map((link) => {
-      moduleMenuItems.push(<MenuItem onClick={toggleMenu}>{link}</MenuItem>);
-    });
-  });
-
-  const HeaderBurgerMenu = () => {
-    return (
+    moduleMenuLists.push(
       <>
-        <span ref={newRef}>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            onClick={toggleMenu}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-        </span>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={showMenu}
-          onClose={toggleMenu}
+        <Divider />
+        <List
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              {moduleName}
+            </ListSubheader>
+          }
+          className={classes.nestedContainer}
         >
-          <MenuItem onClick={toggleMenu}>
-            <Link to="/promise">Promise</Link>
-          </MenuItem>
-          <MenuItem onClick={toggleMenu}>
-            <Link to="/react-hooks">React Hooks</Link>
-          </MenuItem>
-          <MenuItem onClick={toggleMenu}>
-            <Link to="/user-form">Multi-step form</Link>
-          </MenuItem>
-          <MenuItem onClick={toggleMenu}>
-            <Link to="/github-profile">Github profile</Link>
-          </MenuItem>
-          <MenuItem onClick={toggleMenu}>
-            <Link to="/todo-list">Todo List</Link>
-          </MenuItem>
-          {currentUser && <MenuItem onClick={toggleMenu} disabled>StarDb</MenuItem>}
-          {currentUser && moduleMenuItems}
-          {currentUser && <MenuItem
-            onClick={() => {
-              toggleMenu();
-              logout();
-            }}
-          >
-            Logout
-          </MenuItem>}
-          {!currentUser && <MenuItem onClick={toggleMenu}>
-            <Link to="/login">Login</Link>
-          </MenuItem>}
-        </Menu>
+          {moduleLinks[moduleName].map((link) => (
+            <ListItem button>
+              <ListItemText>{link}</ListItemText>
+            </ListItem>
+          ))}
+        </List>
       </>
     );
-  };
+  });
 
   return (
     <Router history={history}>
-      <header>
-        <AppBar title="Main menu" position="static" className={classes.appBar}>
+      {/* <div className={classes.root}> */}
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={clsx(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+        >
           <Toolbar>
-            <HeaderBurgerMenu />
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
             <Typography variant="h6" className={classes.title}>
-              MaterialUI & TypeScript
+              React, Material UI & TypeScript
             </Typography>
           </Toolbar>
         </AppBar>
-      </header>
-      <main className="App">
-        <Switch>
-          <Route path="/" component={UserForm} exact />
-          <Route path="/promise" component={PromiseComponent} />
-          <Route path="/react-hooks" component={Hooks} />
-          <Route path="/user-form" component={UserForm} />
-          <Route path="/github-profile" component={GithubProfile} />
-          <Route path="/todo-list" component={TodoList} />
-          {moduleRoutes}
-          <Route path="/login" component={LoginPage} />
-          <Route component={Error} />
-        </Switch>
-      </main>
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            subheader={
+              <ListSubheader component="div" id="nested-list-subheader">
+                General stuff
+              </ListSubheader>
+            }
+            className={classes.nestedContainer}
+          >
+            <ListItem button>
+              <ListItemText>
+                <Link to="/promise">Promise</Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemText>
+                <Link to="/react-hooks">React Hooks</Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemText>
+                <Link to="/user-form">Multi-step form</Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemText>
+                <Link to="/github-profile">Github profile</Link>
+              </ListItemText>
+            </ListItem>
+            <ListItem button>
+              <ListItemText>
+                <Link to="/todo-list">Todo List</Link>
+              </ListItemText>
+            </ListItem>
+            {moduleMenuLists}
+          </List>
+          <List
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            style={{display: 'none'}}
+            subheader={
+              <ListSubheader component="div" id="nested-list-subheader">
+                Collapsable list items
+              </ListSubheader>
+            }
+            className={classes.nestedContainer}
+          >
+          <ListItem button>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sent mail" />
+            </ListItem>
+            <ListItem button onClick={handleClick}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inbox" />
+              {dropdown ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={dropdown} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button className={classes.nested}>
+                  <ListItemIcon>
+                    <StarBorder />
+                  </ListItemIcon>
+                  <ListItemText primary="Starred" />
+                </ListItem>
+              </List>
+            </Collapse>
+            <ListItem button>
+              <ListItemIcon>
+                <DraftsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Drafts" />
+            </ListItem>
+          </List>
+          <Divider />
+        </Drawer>
+        <main className="App">
+          <div className={classes.drawerHeader} />
+          <Switch>
+            {/* <Route path="/" component={Layout} exact /> */}
+            <Route path="/" component={UserForm} exact />
+            <Route path="/promise" component={PromiseComponent} />
+            <Route path="/react-hooks" component={Hooks} />
+            <Route path="/user-form" component={UserForm} />
+            <Route path="/github-profile" component={GithubProfile} />
+            <Route path="/todo-list" component={TodoList} />
+            {moduleRoutes}
+            <Route path="/login" component={LoginPage} />
+            <Route component={Error} />
+          </Switch>
+        </main>
+      {/* </div> */}
     </Router>
   );
-};
-
-export default App;
+}
