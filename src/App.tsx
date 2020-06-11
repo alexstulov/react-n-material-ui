@@ -332,7 +332,7 @@ export default function PersistentDrawerLeft() {
           <div className={classes.drawerHeader} />
           <Switch>
             {/* <Route path="/" component={Layout} exact /> */}
-            <Route path="/" component={UserForm} exact />
+            <Route path="/" component={() => <div style={{textAlign: 'center'}}><h2>Hello</h2></div>} exact />
             <Route path="/promise" component={PromiseComponent} />
             <Route path="/react-hooks" component={Hooks} />
             <Route path="/user-form" component={UserForm} />

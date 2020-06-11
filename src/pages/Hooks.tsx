@@ -1,4 +1,10 @@
-import React, { useState, useContext, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 const NewContext = React.createContext("");
 
 const UseStateSwitcher = () => {
@@ -111,73 +117,91 @@ const Notification = () => {
 };
 
 const getPlanet = (id: number) => {
-    return fetch(`https://swapi.dev/api/planets/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("failed to fetch planet info");
-        }
-        return response.json();
-      })
-      .then((data) => data)
-}
+  return fetch(`https://swapi.dev/api/planets/${id}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("failed to fetch planet info");
+      }
+      return response.json();
+    })
+    .then((data) => data);
+};
 
 const useRequest = (request: () => Promise<any>) => {
-    const emptyData = {name: ''};
-    // useMemo caching function result. it wont change if no dependencies changes
-    const initialState = useMemo(() => ({
-        data: emptyData,
-        loading: true,
-        error: false
-    }), []);
-    const [dataState, setDataState] = useState(initialState);
+  const emptyData = { name: "" };
+  // useMemo caching function result. it wont change if no dependencies changes
+  const initialState = useMemo(
+    () => ({
+      data: emptyData,
+      loading: true,
+      error: false,
+    }),
+    []
+  );
+  const [dataState, setDataState] = useState(initialState);
   useEffect(() => {
-      setDataState(initialState);
-      let cancelled = false;
-      request().then((data: {name: string}) => !cancelled && setDataState({
-          data,
-          loading: false,
-          error: false
-      }))
-      .catch(() => !cancelled && setDataState({
-          data: emptyData,
-          loading: false,
-          error: true
-      }));
-      return () => {cancelled = true;};
+    setDataState(initialState);
+    let cancelled = false;
+    request()
+      .then(
+        (data: { name: string }) =>
+          !cancelled &&
+          setDataState({
+            data,
+            loading: false,
+            error: false,
+          })
+      )
+      .catch(
+        () =>
+          !cancelled &&
+          setDataState({
+            data: emptyData,
+            loading: false,
+            error: true,
+          })
+      );
+    return () => {
+      cancelled = true;
+    };
   }, [request, initialState]);
 
   return dataState;
-}
+};
 
 // custom hook
-const usePlanetInfo = (id:number) => {
-    // useCallback changes request only on id change. it caches function
-    const request = useCallback(() => getPlanet(id), [id]);
-    return useRequest(request);
-}
+const usePlanetInfo = (id: number) => {
+  // useCallback changes request only on id change. it caches function
+  const request = useCallback(() => getPlanet(id), [id]);
+  return useRequest(request);
+};
 
 const PlanetInfo = ({ id }: { id: number }) => {
-  const {data, loading, error} = usePlanetInfo(id);
+  const { data, loading, error } = usePlanetInfo(id);
 
   if (error) {
-      return <p>Something went wrong!</p>
+    return <p>Something went wrong!</p>;
   }
-  if(loading) {
-      return <p>Loading... Please wait!</p>
+  if (loading) {
+    return <p>Loading... Please wait!</p>;
   }
   return (
-      <p>{id} - {data && data.name}</p>
+    <p>
+      {id} - {data && data.name}
+    </p>
   );
 };
 
 const Hooks = () => {
   return (
-    <NewContext.Provider value="Hello useContext hook">
-      <h1>Hooks page</h1>
-      <UseStateSwitcher />
-      <UseContextValue />
-      <UseEffect />
-    </NewContext.Provider>
+    <div style={{ textAlign: "center" }}>
+      <NewContext.Provider value="Hello useContext hook">
+        <h1>Hooks page</h1>
+        <UseStateSwitcher />
+        <UseContextValue />
+        <UseEffect />
+      </NewContext.Provider>
+    </div>
   );
 };
 

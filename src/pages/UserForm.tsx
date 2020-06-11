@@ -58,10 +58,11 @@ export class UserForm extends PureComponent<IProps, any> {
         const { step } = this.state;
         const { firstName, lastName, email, occupation, city, bio } = this.state;
         const values = { firstName, lastName, email, occupation, city, bio };
+        let content = null;
 
         switch(step) {
             case 1:
-                return (
+                content = (
                     <FormUserDetails
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
@@ -69,27 +70,33 @@ export class UserForm extends PureComponent<IProps, any> {
                         values={values}
                     />
                 );
+                break;
             case 2:
-                return <FormPersonalDetails
+                content = <FormPersonalDetails
                     nextStep={this.nextStep}
                     prevStep={this.prevStep}
                     handleChange={this.handleChange}
                     values={values}
                 />;
+                break;
             case 3:
-
-                return <Confirm
+                content = <Confirm
                     nextStep={this.nextStep}
                     prevStep={this.prevStep}
                     values={values}
                 />;
+                break;
             case 4:
-                return <Success />;
+                content = <Success />;
+                break;
+            default:
+                content = <p>Something went wrong</p>;
+                break;
         }
 
         return (
-            <div>
-                <p>Something went wrong</p>
+            <div style={{textAlign: 'center'}}>
+                {content}
             </div>
         );
     }
