@@ -31,9 +31,12 @@ const updateCartItems = (cartItems: any, item: any, index: number) => {
   
     const newItem = updateCartItem(book, bookInCart, quantity);
   
+    const newItems = updateCartItems(state.shoppingCart.cartItems, newItem, bookInCartIndex);
+    const newOrderTotal = newItems.reduce((sum: number, item: any) => sum+item.total, 0);
+
     return {
-      orderTotal: 0,
-      cartItems: updateCartItems(state.shoppingCart.cartItems, newItem, bookInCartIndex),
+      orderTotal: newOrderTotal,
+      cartItems: newItems,
     };
   };
   
@@ -43,7 +46,7 @@ const updateCartItems = (cartItems: any, item: any, index: number) => {
     if (state === undefined) {
       return {
         cartItems: [],
-        orderTotal: 333,
+        orderTotal: 0,
       }
     }
   

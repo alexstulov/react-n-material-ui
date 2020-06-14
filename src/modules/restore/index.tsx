@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Route, Switch } from "react-router-dom";
 import ShopHeader from "./components/shop-header";
 import { HomePage, CartPage } from "./components/pages";
 
@@ -34,7 +32,7 @@ const reStoreWrapper = (Page: any) => (props: any) => {
         <BookStoreServiceProvider value={bookStoreService}>
           <Router>
             <main role="main" className="container">
-              <ShopHeader numItems={5} total={210} />
+              <ShopHeader />
               <Page />
             </main>
           </Router>
