@@ -184,7 +184,7 @@ export default function PersistentDrawerLeft() {
   let moduleMenuLists: React.ReactElement[] = [];
   Object.keys(moduleLinks).forEach((moduleName) => {
     moduleMenuLists.push(
-      <>
+      <div key={moduleName}>
         <Divider />
         <List
           component="nav"
@@ -197,12 +197,11 @@ export default function PersistentDrawerLeft() {
           className={classes.nestedContainer}
         >
           {moduleLinks[moduleName].map((link) => (
-            <ListItem button>
-              <ListItemText>{link}</ListItemText>
-            </ListItem>
-          ))}
+              <ListItem button key={moduleName+link.props.children}>
+                <ListItemText>{link}</ListItemText>
+              </ListItem>))}
         </List>
-      </>
+      </div>
     );
   });
 
