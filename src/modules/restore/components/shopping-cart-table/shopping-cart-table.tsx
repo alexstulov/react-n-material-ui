@@ -12,7 +12,7 @@ const ShoppingCartTable = ({
 }: any) => {
   const renderRow = ({id,title,count,total}: any, index: number) => {
     return (
-      <tr>
+      <tr key={id}>
         <td>{index+1}</td>
         <td>{title}</td>
         <td>{count}</td>
