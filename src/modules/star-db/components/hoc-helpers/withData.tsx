@@ -7,9 +7,14 @@ const withData = (View: React.FC<any>) => {
         const [data, setData] = useState<any[]>([]);
 
         useEffect(() => {
+            let cancelled = false;
             props.getData().then((data) => {
-                setData(data);
+                if (!cancelled) {
+                    setData(data);
+                }
             });
+
+            return () => {cancelled = true;};
         }, [props]);
 
         if (!data) return <Spinner/>;
