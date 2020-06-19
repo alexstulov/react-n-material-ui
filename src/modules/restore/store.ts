@@ -1,14 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, Action, Dispatch } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import reducer from './reducers';
+// import { Dispatch } from 'react';
 
-const logMiddleware = ({getState}: any) => (next: any) => (action: any) => {
-    // console.log(action.type, getState());
+const logMiddleware = () => (next: Dispatch<Action>) => (action: Action) => {
     return next(action);
 }
 
-const stringMiddleware = () => (next: any) => (action: any) => {
+const stringMiddleware = () => (next: Dispatch<Action>) => (action: Action) => {
     if (typeof action === 'string') {
         return next({
             type: action
@@ -17,6 +17,7 @@ const stringMiddleware = () => (next: any) => (action: any) => {
     return next(action);
 }
 
+//@ts-ignore
 const store = createStore(reducer, applyMiddleware(
     thunkMiddleware,
     stringMiddleware,
@@ -26,7 +27,7 @@ const store = createStore(reducer, applyMiddleware(
 // This is the way you may pass action with stringMiddleware
 // store.dispatch('HELLO_WORLD');
 
-const delayedActionCreator = (timeout: number) => (dispatch: any) => {
+const delayedActionCreator = (timeout: number) => (dispatch: Dispatch<Action>) => {
     // console.log('delayedActionCreator executed');
     setTimeout(() => dispatch({
         type: 'DELAYED_ACTION'

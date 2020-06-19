@@ -1,12 +1,14 @@
 import React from 'react';
 import './shop-header.css';
 import { useSelector } from "react-redux";
+import { ShoppingCartStateType } from '../../reducers';
+import { CartItemType } from '../../reducers/shopping-cart';
 
 const ShopHeader = () => {
-  const total: any = useSelector((state: any) => {
+  const total = useSelector(({shoppingCart}: {shoppingCart: ShoppingCartStateType}) => {
     return {
-      amount: state.shoppingCart.cartItems.reduce((amount: number, item: any) => amount+item.count, 0),
-      price: state.shoppingCart.orderTotal
+      amount: shoppingCart.cartItems.reduce((amount: number, item: CartItemType) => amount+item.count, 0),
+      price: shoppingCart.orderTotal
     };
   });
   

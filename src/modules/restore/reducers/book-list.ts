@@ -1,4 +1,6 @@
-const updateBookList = (state: any, action: any) => {
+import { ReduxStateType } from ".";
+
+const updateBookList = (state: ReduxStateType, action: any) => {
     if (state === undefined) {
       return {
         books: [],

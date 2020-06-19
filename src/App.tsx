@@ -161,7 +161,7 @@ export default function PersistentDrawerLeft() {
     }>;
   }
 
-  let moduleRoutes: Array<any> = [];
+  let moduleRoutes: Array<JSX.Element> = [];
   let moduleLinks: { [name: string]: React.ReactElement[] } = {};
   for (let i = 0; i < modules.length; i += 1) {
     const module = modules[i]();
@@ -169,7 +169,7 @@ export default function PersistentDrawerLeft() {
     module.routes.forEach(
       (route: {
         name: string;
-        routeProps: { path: string; exact: boolean; component: any };
+        routeProps: { path: string; exact: boolean; component: React.FunctionComponent };
       }): void => {
         moduleRoutes.push(
           <PrivateRoute key={route.name} {...route.routeProps} />

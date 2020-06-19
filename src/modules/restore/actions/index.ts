@@ -1,6 +1,15 @@
+import BookStoreService from '../services/book-store-service';
+import { Dispatch } from 'redux';
 
+export interface Book {
+  id: number;
+  title: string;
+  author: string;
+  price: number;
+  coverImage: string;
+}
 
-const booksLoaded = (newBooks: any) => {
+const booksLoaded = (newBooks: Book[]) => {
     return {
       type: "FETCH_BOOKS_REQUEST",
       payload: newBooks,
@@ -13,7 +22,7 @@ const booksLoaded = (newBooks: any) => {
     };
   };
   
-  const booksError = (error:any) => {
+  const booksError = (error: Error) => {
     return {
       type: "FETCH_BOOKS_FAILURE",
       payload: error
@@ -57,11 +66,11 @@ const booksLoaded = (newBooks: any) => {
   // here thunk allows us replace fetchBooksOld with the form below
   // beside this it simplifies mapDispatchToProps in book-list.js
   
-  const fetchBooks = (bookstoreService: any) => () => (dispatch: any) => {
+  const fetchBooks = (bookstoreService: BookStoreService) => () => (dispatch: Dispatch) => {
     dispatch(booksRequested());
-    bookstoreService.getBooks().then((data: any) => {
+    bookstoreService.getBooks().then((data: Book[] | any) => {
       dispatch(booksLoaded(data));
-    }).catch((error: any) => {
+    }).catch((error: Error) => {
       dispatch(booksError(error));
     });
   }

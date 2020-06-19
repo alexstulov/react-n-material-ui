@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 
 import FormUserDetails from '../components/multi-step-form/FormUserDetails';
 import FormPersonalDetails from "../components/multi-step-form/FormPersonalDetails";
@@ -19,8 +19,8 @@ interface IState {
     bio: string;
 }
 
-export class UserForm extends PureComponent<IProps, any> {
-    state: any;
+export class UserForm extends Component {
+    state: IState;
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -50,8 +50,8 @@ export class UserForm extends PureComponent<IProps, any> {
         });
     }
 
-    handleChange = (input: string | number) => (e: any) => {
-        this.setState({[input]: e.target.value});
+    handleChange = (input: string | number) => (event: React.SyntheticEvent) => {
+        this.setState({[input]: (event.target as HTMLInputElement).value});
     }
 
     render() {

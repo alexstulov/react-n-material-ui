@@ -23,7 +23,7 @@ const cartPage = {
   name: "Cart",
 };
 
-const reStoreWrapper = (Page: any) => (props: any) => {
+const reStoreWrapper = (Page: React.FunctionComponent) => () => {
   const bookStoreService = new BookStoreService();
 
   return (

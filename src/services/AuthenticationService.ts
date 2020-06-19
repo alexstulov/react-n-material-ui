@@ -31,6 +31,15 @@ export interface UserType {
     token: string;
 }
 
+export const emptyUser = {
+    id: -1,
+    username: '',
+    fistName: '',
+    lastName: '',
+    token: ''
+
+};
+
 export const authenticationService = {
     login,
     logout,
@@ -47,8 +56,8 @@ function login (username: string, password: string) {
 
     return fakeLogin(`${apiUrl}/users/authenticate`, requestOptions)
     .then(handleResponse)
-    .then(user => {
-        if (!user) return;
+    .then((user: UserType) => {
+        if (!user) return emptyUser;
         localStorage.setItem('currentUser', JSON.stringify(user));
         currentUserSubject.next(user);
 
