@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     },
 });
 
-const GithubProfile: React.FC<{}> = () => {
+const GithubProfile: React.FunctionComponent = () => {
     const classes = useStyles();
     let [githubUser, setGithubUser] = React.useState<GithubUserType>({ avatar_url: 'https://picsum.photos/200/300' });
     let [userLink, setUserLink] = React.useState<string>('https://github.com/');

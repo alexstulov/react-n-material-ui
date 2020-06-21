@@ -33,7 +33,6 @@ const PlanetView = ({ planet }: { planet: PlanetType }) => {
 
 const RandomPlanet = ({ updateInterval = 10000 }: { updateInterval?: number }) => {
     const swapiService = new SwapiService();
-    let interval: number;
     const [fetched, setFetched] = useState(true);
     const [error, setError] = useState(false);
     const [planet, setPlanet] = useState<PlanetType>({
@@ -60,7 +59,7 @@ const RandomPlanet = ({ updateInterval = 10000 }: { updateInterval?: number }) =
     }
 
     useEffect(() => {
-        interval=window.setInterval(updatePlanet, updateInterval);
+        let interval=window.setInterval(updatePlanet, updateInterval);
         return () => {
             clearInterval(interval);
         }

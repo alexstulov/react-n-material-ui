@@ -1,9 +1,9 @@
-const compose = (...funcs: ((component: React.FC<any>) => React.FC<any>)[]) =>
-    (comp: React.FC<any>) => {
+const compose = (...funcs: ((component: React.FunctionComponent<any>) => React.FunctionComponent<any>)[]) =>
+    (comp: React.FunctionComponent<any>) => {
         return funcs.reduceRight((
-            previousResult: React.FC<any>,
-            func: (component: React.FC<any>
-            ) => React.FC<any>) => func(previousResult), comp)
+            previousResult: React.FunctionComponent<any>,
+            func: (component: React.FunctionComponent<any>
+            ) => React.FunctionComponent<any>) => func(previousResult), comp)
     }
 
 export default compose;

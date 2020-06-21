@@ -27,12 +27,12 @@ const store = createStore(reducer, applyMiddleware(
 // This is the way you may pass action with stringMiddleware
 // store.dispatch('HELLO_WORLD');
 
-const delayedActionCreator = (timeout: number) => (dispatch: Dispatch<Action>) => {
-    // console.log('delayedActionCreator executed');
-    setTimeout(() => dispatch({
-        type: 'DELAYED_ACTION'
-    }), timeout);
-};
+// const delayedActionCreator = (timeout: number) => (dispatch: Dispatch<Action>) => {
+//     // console.log('delayedActionCreator executed');
+//     setTimeout(() => dispatch({
+//         type: 'DELAYED_ACTION'
+//     }), timeout);
+// };
 
 // store.dispatch(delayedActionCreator(3000));
 

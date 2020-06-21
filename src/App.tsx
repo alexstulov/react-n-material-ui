@@ -21,7 +21,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Collapse from "@material-ui/core/Collapse";
-import MailIcon from "@material-ui/icons/Mail";
 import { Link, Router, Route, Switch } from "react-router-dom";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
@@ -155,7 +154,7 @@ export default function PersistentDrawerLeft() {
       routeProps: {
         path: string;
         exact: boolean;
-        component: React.FC;
+        component: React.FunctionComponent;
       };
       name: string;
     }>;

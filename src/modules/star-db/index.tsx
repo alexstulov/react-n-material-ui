@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./utils/bootstrap.min.css";
 
 import ErrorBoundary from "./components/error-boundary";
-import Header from "./components/header";
 
 import { StarshipsPage, PeoplePage, PlanetsPage } from "./components/pages";
 import { SwapiServiceProvider } from "./components/swapi-service-context";

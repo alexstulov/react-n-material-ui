@@ -4,7 +4,6 @@ import { RouteComponentProps } from "react-router-dom";
 import * as Yup from "yup";
 
 import { authenticationService } from "../services";
-import {UserType} from '../services/AuthenticationService';
 
 export default class LoginPage extends Component<RouteComponentProps, {}>{
   constructor(props: RouteComponentProps) {
