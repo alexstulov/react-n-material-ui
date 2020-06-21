@@ -1,10 +1,11 @@
 import React from 'react';
 import './item-list.css';
+import { ItemType } from '../../services/swapi-service';
 
 interface ItemListType {
-    data: any[],
-    onItemSelected: (itemId: number) => void;
-    children: (item: any) => React.ReactNode;
+    data: ItemType[],
+    onItemSelected: (itemId: string) => void;
+    children: (item: ItemType) => React.ReactNode;
 }
 
 const ItemList = ({data, onItemSelected = () => {console.log('onItemSelected is not provided');}, children}: ItemListType) => { 

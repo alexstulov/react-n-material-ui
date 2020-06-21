@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { RouteComponentProps } from "react-router-dom";
 import * as Yup from "yup";
 
 import { authenticationService } from "../services";
 import {UserType} from '../services/AuthenticationService';
 
-export default class LoginPage extends Component<{history: any, location: any}, {}>{
-  constructor(props: {history: any, location: any}) {
+export default class LoginPage extends Component<RouteComponentProps, {}>{
+  constructor(props: RouteComponentProps) {
     super(props);
 
     if (authenticationService.currentUserValue) {
@@ -32,10 +33,15 @@ export default class LoginPage extends Component<{history: any, location: any}, 
           onSubmit={({ username, password }, { setStatus, setSubmitting }) => {
             setStatus();
             authenticationService.login(username, password).then(
-              (user: UserType) => {
-                const { from } = this.props.location.state || {
-                  from: { pathname: "/" },
-                };
+              () => {
+                const state = this.props.location.state;
+                let from = { pathname: "/" };
+                if (state
+                  && state.constructor === Object
+                  && Object.keys(state).length !== 0
+                  && state.hasOwnProperty('from')) {
+                  from = (state as any)['from'];
+                }
                 this.props.history.push(from);
               },
               (error) => {

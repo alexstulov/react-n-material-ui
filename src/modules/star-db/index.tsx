@@ -24,7 +24,7 @@ const starshipsPage = {
   name: "Starships",
 };
 
-const starDbWrapper = (Page: any) => (props: any) => {
+const starDbWrapper = (Page: React.FunctionComponent) => () => {
   const swService: SwapiService | DummySwapiService = new SwapiService();
   const [swapiService, setSwapiService] = useState<
     SwapiService | DummySwapiService

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CircularProgress, Typography, Button, Grid, Box } from '@material-ui/core';
 
-const PromiseComponent: React.FC<{}> = () => {
+const PromiseComponent: React.FunctionComponent = () => {
 
     let [data, setData] = React.useState<string>('');
 

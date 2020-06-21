@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Spinner from '../spinner';
 
-const withData = (View: React.FC<any>) => {
+const withData = (View: React.FunctionComponent<any>) => {
     return (props: {getData: () => Promise<any[]>}) => {
         const [data, setData] = useState<any[]>([]);
 

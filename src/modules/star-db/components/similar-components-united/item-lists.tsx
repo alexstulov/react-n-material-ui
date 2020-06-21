@@ -4,17 +4,22 @@ import ItemList from '../item-list';
 import {withData, withSwapiService} from '../hoc-helpers';
 
 import {compose} from '../../utils';
+import SwapiService, { ItemType, PersonType, PlanetType, StarshipType } from '../../services/swapi-service';
+import DummySwapiService from '../../services/dummy-swapi-service';
 
-const withChildFunction = (fn: (item: any) => any) => (Wrapped: React.FC<any>) => {
+const withChildFunction = (fn: (item: ItemType) => React.ReactNode) => (Wrapped: React.FunctionComponent) => {
     return (props: any) => {
         return (<Wrapped {...props}>{fn}</Wrapped>);
     }
 }
 
 // PEOPLE
-const renderPerson = (item: any) => <span>{item.name} ({item.birthYear}, {item.eyeColor})<button>!</button></span>;
+const renderPerson = (item: ItemType) => {
+    item = item as PersonType;
+    return <span>{item.name} ({item.birthYear}, {item.eyeColor})<button>!</button></span>;
+};
 
-const mapPersonMethodsToProps = (swapiService: any) => {
+const mapPersonMethodsToProps = (swapiService: SwapiService | DummySwapiService) => {
     return {
         getData: swapiService.getAllPeople
     }
@@ -27,9 +32,12 @@ const PersonList = compose(
 )(ItemList);
 
 // PLANETS
-const renderPlanet = (item: any) => <span>{item.name} ({item.diameter}, {item.rotationPeriod})</span>;
+const renderPlanet = (item: ItemType) => {
+    item = item as PlanetType;
+    return <span>{item.name} ({item.diameter}, {item.rotationPeriod})</span>;
+};
 
-const mapPlanetMethodsToProps = (swapiService: any) => {
+const mapPlanetMethodsToProps = (swapiService: SwapiService | DummySwapiService) => {
     return {
         getData: swapiService.getAllPlanets
     }
@@ -42,9 +50,12 @@ const PlanetsList = compose(
 )(ItemList);
 
 // STARSHIPS
-const renderStarship = (item: any) => <span>{item.name} ({item.model}, {item.manufacturer})</span>;
+const renderStarship = (item: ItemType) => {
+    item = item as StarshipType;
+    return <span>{item.name} ({item.model}, {item.manufacturer})</span>;;
+};
 
-const mapStarshipMethodsToProps = (swapiService: any) => {
+const mapStarshipMethodsToProps = (swapiService: SwapiService | DummySwapiService) => {
     return {
         getData: swapiService.getAllStarships
     }

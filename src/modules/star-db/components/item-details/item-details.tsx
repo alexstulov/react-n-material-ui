@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { ItemType } from '../../services/swapi-service';
 
-const Record = ({item, field, label}: {item?:any; field: string; label: string;}) => {
+const Record = ({item, field, label}: {item?: ItemType; field: string; label: string;}) => {
+    // @ts-ignore
+    const value = item && item.hasOwnProperty(field) ? item[field] : '';
     return (
         <li className="list-group-item">
             <span className="term">{label}: </span>
-            <span>{item && item[field]}</span>
+            <span>{value}</span>
         </li>
     )
 }
@@ -13,13 +16,13 @@ export { Record };
 
 interface ItemDetailsType {
     itemId: number;
-    getData: (itemId: number) => any;
-    getImageUrl: (itemId: number) => string;
+    getData: (itemId: number) => Promise<ItemType>;
+    getImageUrl: (item: ItemType) => string;
     children: any;
 };
 
 const ItemDetails = ({itemId, getData, getImageUrl, children}: ItemDetailsType) => {
-    const [item, setItem] = useState<any>(null);
+    const [item, setItem] = useState<ItemType | null>(null);
     const [image, setImage] = useState('');
 
     const updateItem = () => {
@@ -28,7 +31,7 @@ const ItemDetails = ({itemId, getData, getImageUrl, children}: ItemDetailsType) 
         }
 
         getData(itemId)
-        .then((item: any) => {
+        .then((item: ItemType) => {
             setItem(item);
             setImage(getImageUrl(item));
         });

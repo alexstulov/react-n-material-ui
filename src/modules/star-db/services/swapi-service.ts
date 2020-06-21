@@ -7,6 +7,7 @@ export interface PlanetType {
 }
 
 export interface StarshipType {
+  id: string;
   name: string;
   model: string;
   manufacturer: string;
@@ -18,11 +19,14 @@ export interface StarshipType {
 }
 
 export interface PersonType {
+  id: string;
   name: string;
   gender: string;
   birthYear: string;
   eyeColor: string;
 }
+
+export type ItemType = PersonType | StarshipType | PlanetType;
 
 interface ApiPlanetType {
     name: string;

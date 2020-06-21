@@ -2,6 +2,17 @@ import React from "react";
 import "./shopping-cart-table.css";
 import { connect } from "react-redux";
 import { bookAmountIncreased, bookAmountDecreased, bookDeletedFromCart} from '../../actions';
+import { CartItemType } from "../../reducers/shopping-cart";
+import { ReduxStateType } from "../../reducers";
+import { Dispatch } from "redux";
+
+interface ShoppingCartTableType {
+  items: CartItemType[];
+  total: number;
+  onIncrease: (id: number) => void;
+  onDecrease: (id: number) => void;
+  onDelete: (id: number) => void;
+}
 
 const ShoppingCartTable = ({
   items,
@@ -9,8 +20,8 @@ const ShoppingCartTable = ({
   onIncrease,
   onDecrease,
   onDelete,
-}: any) => {
-  const renderRow = ({id,title,count,total}: any, index: number) => {
+}: ShoppingCartTableType) => {
+  const renderRow = ({id,title,count,total}: CartItemType, index: number) => {
     return (
       <tr key={id}>
         <td>{index+1}</td>
@@ -61,14 +72,14 @@ const ShoppingCartTable = ({
   );
 };
 
-const mapStateToProps = ({shoppingCart: {cartItems, orderTotal}}: any) => {
+const mapStateToProps = ({shoppingCart: {cartItems, orderTotal}}: ReduxStateType) => {
   return {
     items: cartItems,
     total: orderTotal
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onIncrease: (id: number) => dispatch(bookAmountIncreased(id)),
     onDecrease: (id: number) => dispatch(bookAmountDecreased(id)),

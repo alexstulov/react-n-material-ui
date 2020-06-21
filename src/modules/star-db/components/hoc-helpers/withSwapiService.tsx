@@ -1,12 +1,16 @@
 import React from 'react';
 import { SwapiServiceConsumer } from '../swapi-service-context';
+import DummySwapiService from '../../services/dummy-swapi-service';
+import SwapiService from '../../services/swapi-service';
 
-const withSwapiService = (mapMethodsToProps: (swapiService: any) => { getData: () => any[] }) => (Wrapped: React.FC<any>) => {
+export type withSwapiServiceArgsType = (swapiService: SwapiService | DummySwapiService) => ({ getData: (id?: any) => Promise<any> });
+
+const withSwapiService = (mapMethodsToProps: withSwapiServiceArgsType) => (Wrapped: React.FunctionComponent) => {
     return (props: any) => {
         return (
             <SwapiServiceConsumer>
                 {
-                    (swapiService) => {
+                    (swapiService: any) => {
                         const serviceProps = mapMethodsToProps(swapiService);
 
                         return (<Wrapped {...props} {...serviceProps} />);
