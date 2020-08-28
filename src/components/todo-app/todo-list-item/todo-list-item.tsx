@@ -1,44 +1,52 @@
-import React from 'react';
-import './todo-list-item.css';
-import { IconButton, Grid } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ExclamationIcon from '@material-ui/icons/PriorityHigh';
+import React from "react";
+import "./todo-list-item.css";
+import { Button, Col, Row } from "reactstrap";
+import {TrashIcon, ZapIcon} from '@primer/octicons-react';
 
 type TodoListItemType = {
-    label: string;
-    done: boolean;
-    important: boolean;
-    onDelete: () => void,
-    onDone: () => void,
-    onImportant: () => void,
-}
+  label: string;
+  done: boolean;
+  important: boolean;
+  onDelete: () => void;
+  onDone: () => void;
+  onImportant: () => void;
+};
 
-const TodoListItem = ({ label, onDelete, onDone, onImportant, done, important }: TodoListItemType) => {
-    let classNames = 'todo-list-item';
+const TodoListItem = ({
+  label,
+  onDelete,
+  onDone,
+  onImportant,
+  done,
+  important,
+}: TodoListItemType) => {
+  let classNames = "todo-list-item";
 
-    if (done) {
-        classNames += ' done';
-    }
+  if (done) {
+    classNames += " done";
+  }
 
-    if (important) {
-        classNames += ' important';
-    }
+  if (important) {
+    classNames += " important";
+  }
 
-    return (<Grid container justify="space-between" className={classNames}>
-        <Grid container item direction="row">
-            <Grid container item direction="row" xs={8}>
-                <span className="todo-list-item-label" onClick={onDone}>{label}</span>
-            </Grid>
-            <Grid container item direction="row" xs={4}>
-                <IconButton color="primary" edge="start" onClick={onDelete} aria-label="menu">
-                    <DeleteIcon />
-                </IconButton>
-                <IconButton color="secondary" edge="start" onClick={onImportant} aria-label="menu">
-                    <ExclamationIcon />
-                </IconButton>
-            </Grid>
-        </Grid>
-    </Grid>);
+  return (
+    <Row>
+      <Col xs={8} className={classNames}>
+        <span className="todo-list-item-label" onClick={onDone}>
+          {label}
+        </span>
+      </Col>
+      <Col xs={4} className="text-right">
+          <Button className="mr-1 bg-danger" onClick={onDelete}>
+              <TrashIcon/>
+          </Button>
+          <Button className="mr-1 bg-warning" onClick={onImportant}>
+              <ZapIcon/>
+          </Button>
+      </Col>
+    </Row>
+  );
 };
 
 export default TodoListItem;
