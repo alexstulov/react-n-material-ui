@@ -45,6 +45,9 @@ import { authenticationService } from "./services";
 import { PrivateRoute } from "./components/helpers";
 
 import { createBrowserHistory } from "history";
+import Game from "./components/tictactoe/Game";
+import FormikWithYup from "./components/formik/FormikYupExample";
+import { FormikExample } from "./components/formik";
 const history = createBrowserHistory();
 
 const drawerWidth = 240;
@@ -287,12 +290,27 @@ export default function PersistentDrawerLeft() {
           </ListItem>
           <ListItem button>
             <ListItemText>
+              <Link to="/formik">Formik</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemText>
+              <Link to="/formik-yup">Formik with Yup</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemText>
               <Link to="/github-profile">Github profile</Link>
             </ListItemText>
           </ListItem>
           <ListItem button>
             <ListItemText>
               <Link to="/todo-list">Todo List</Link>
+            </ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemText>
+              <Link to="/tic-tac-toe">Tic tac toe</Link>
             </ListItemText>
           </ListItem>
         </List>
@@ -356,8 +374,11 @@ export default function PersistentDrawerLeft() {
           <Route path="/promise" component={PromiseComponent} />
           <Route path="/react-hooks" component={Hooks} />
           <Route path="/user-form" component={UserForm} />
+          <Route path="/formik" component={FormikExample} />
+          <Route path="/formik-yup" component={FormikWithYup} />
           <Route path="/github-profile" component={GithubProfile} />
           <Route path="/todo-list" component={TodoList} />
+          <Route path="/tic-tac-toe" component={Game} />
           {currentUser && moduleRoutes}
           <Route path="/login" component={LoginPage} />
           <Route component={Error} />
