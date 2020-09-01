@@ -1,0 +1,88 @@
+// variables
+$grid-columns: 12
+$grid-max-width: 65em
+
+$breakpoint-small: "only screen and (min-width: 20em)"
+$breakpoint-medium: "only screen and (min-width: 30em)"
+
+$default-height: 92vh
+$common-grey: #ccc
+
+@mixin border-box
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+// defaults
+
+%clearfix
+  *zoom: 1
+  &:before,
+  &:after
+    content: " "
+    display: table
+  &:after
+    clear: both
+
+*, *:after, *:before
+  @include border-box
+
+.hidden
+  display: none
+
+.wrapper
+  width: 100%
+  margin: 0 auto
+
+// table
+.wrapper, .row
+  @extend %clearfix
+
+[class*='column-']
+  float: left
+  padding: 1em
+  width: 100%
+  min-height: 1px
+
+@media #{$breakpoint-medium}
+
+  .wrapper
+    width: 95%
+    max-width: $grid-max-width
+
+  @for $i from 1 through $grid-columns
+    .column-#{$i}
+      width: 100% / $grid-columns * $i
+
+.drum-machine
+  width: 360px
+  margin: 0 auto
+
+.top
+  border-radius: 1em 1em 0 0
+  border: 1px solid #d6d6d6
+  border-bottom: none
+  .player-screen
+    background-color: #474b56
+    color: #ff6624
+    font-size: 3em
+    font-weight: bolder
+    font-family: Arial, Helvetica, sans-serif
+    padding: 0.1em
+    text-align: center
+
+.keyboard
+  background-color: #252c36
+  border-radius: 0 0 1em 1em
+  border: 2px solid #d6d6d6
+  border-top: none
+  [class*='column-']
+    padding: 0.5em
+    .keyboard-button
+      background-color: #6e7a86
+      border-color: #474b56
+      width: 7.8em
+      height: 7.8em
+      outline: none
+      span
+        font-size: 3em

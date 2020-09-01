@@ -1,0 +1,34 @@
+$knob-height: 64px
+$knob-width: 64px
+
+input[type=range].input-knob,input[type=range].input-slider
+	-webkit-appearance: none
+	-moz-appearance: none
+	border: none
+	box-sizing: border-box
+	overflow: hidden
+	background-repeat: no-repeat
+	background-size: 100% 100%
+	background-position: 0px 0%
+	background-color: transparent
+	touch-action: none
+	outline: none
+	cursor: pointer
+
+input[type=range].input-knob
+	width: $knob-width
+	height: $knob-height
+
+input[type=range].input-knob::-webkit-slider-thumb
+	-webkit-appearance: none
+	opacity: 0
+
+input[type=range].input-knob::-moz-range-thumb
+	-moz-appearance: none
+	height: 0
+	border: none
+
+input[type=range].input-knob::-moz-range-track
+	-moz-appearance: none
+	height: 0
+	border: none
