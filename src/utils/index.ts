@@ -1,3 +1,4 @@
-import GenerateUUID from './GenerateUUID';
+import GenerateUUID from "./GenerateUUID";
+import compose from "./compose";
 
-export { GenerateUUID };
+export { GenerateUUID, compose };

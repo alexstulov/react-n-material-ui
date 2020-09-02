@@ -1,5 +1,14 @@
 export default class BufferLoader {
-  constructor(context, urlList, callback) {
+  context: object;
+  urlList: object;
+  onload: (data: any) => void;
+  bufferList: string[];
+  loadCount: number;
+  constructor(
+    context: object,
+    urlList: string[],
+    callback: (data: any) => void
+  ) {
     this.context = context;
     this.urlList = urlList;
     this.onload = callback;
@@ -7,7 +16,7 @@ export default class BufferLoader {
     this.loadCount = 0;
   }
 
-  loadBuffer = (url, index) => {
+  loadBuffer = (url: string, index: string) => {
     // Load buffer asynchronously
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
@@ -15,27 +24,29 @@ export default class BufferLoader {
 
     var loader = this;
 
-    request.onload = function() {
+    request.onload = function () {
       // Asynchronously decode the audio file data in request.response
+      //@ts-ignore
       loader.context.decodeAudioData(
         request.response,
-        function(buffer) {
+        function (buffer: any) {
           if (!buffer) {
-            alert('error decoding file data: ' + url);
+            alert("error decoding file data: " + url);
             return;
           }
+          //@ts-ignore
           loader.bufferList[index] = buffer;
           if (++loader.loadCount === Object.keys(loader.urlList).length)
             loader.onload(loader.bufferList);
         },
-        function(error) {
-          console.error('decodeAudioData error', error);
+        function (error: any) {
+          console.error("decodeAudioData error", error);
         }
       );
     };
 
-    request.onerror = function() {
-      alert('BufferLoader: XHR error');
+    request.onerror = function () {
+      alert("BufferLoader: XHR error");
     };
 
     request.send();
@@ -43,6 +54,7 @@ export default class BufferLoader {
 
   load = () => {
     Object.keys(this.urlList).forEach((letter) => {
+      //@ts-ignore
       this.loadBuffer(this.urlList[letter], letter);
     });
   };

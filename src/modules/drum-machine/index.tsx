@@ -11,7 +11,7 @@ const playerService = new Player();
 
 const basePath = "/drum-machine";
 
-const drumMachineWrapper = () => () => {
+const DrumMachine = () => {
   return (
     <Provider store={store}>
       <PlayerProvider value={playerService}>
@@ -29,7 +29,7 @@ export default () => {
         routeProps: {
           path: `${basePath}`,
           exact: true,
-          component: drumMachineWrapper(),
+          component: DrumMachine,
         },
         name: "Drum machine",
       },
