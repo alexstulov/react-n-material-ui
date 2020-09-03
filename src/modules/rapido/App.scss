@@ -1,0 +1,91 @@
+.hidden {
+  display: none;
+}
+.rapido-container {
+  min-height: 368px;
+  max-width: 500px;
+  min-width: 150px;
+  margin: 20px auto;
+  border: 5px solid;
+  border-image-slice: 1;
+  border-width: 10px;
+  border-image-source: linear-gradient(#4568dc, #af6ab3);
+  padding: 17px 11px 23px 11px;
+  .head {
+    h2 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .magic-stick {
+      width: 20px;
+      height: 20px;
+      background: url("./magic-wand.png") no-repeat;
+      border-radius: 50%;
+      &:hover {
+        background-color: #ffd205;
+        cursor: pointer;
+      }
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+  p {
+    font-size: 14px;
+    font-weight: normal;
+    span {
+      font-size: 14px;
+      font-weight: lighter;
+    }
+  }
+  .field {
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: bold;
+    margin-bottom: 21px;
+    .field__item {
+      flex-shrink: 0;
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      padding: 9px 2px;
+      width: 40px;
+      text-align: center;
+      vertical-align: middle;
+      &.active {
+        background-color: #ffd205;
+        border: none;
+        margin: 1px;
+        &:hover {
+          background-color: #fce686;
+        }
+      }
+      &:hover {
+        background-color: #f6f5f3;
+        cursor: pointer;
+      }
+      span {
+        font-size: 14px;
+        font-weight: normal;
+      }
+    }
+  }
+  .button-wrapper {
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    .submit-button {
+      cursor: pointer;
+      background: none;
+      border: 1px solid #d6d6d6;
+      border-radius: 40px;
+      padding: 16px 26px;
+      &:hover {
+        background-color: #bebebe;
+        color: white;
+      }
+      &:disabled {
+        background-color: #eeeeee;
+        color: #d6d6d6;
+      }
+    }
+  }
+}
