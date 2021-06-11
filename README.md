@@ -1,3 +1,10 @@
+This project is compilation of different React-related projects. Some of them fully or partially available at codepen:
+
+* Star-db from Bura's course,
+* Restore,
+* Rapido lottery ([markup](https://codepen.io/astulov/pen/RwrzoJp)),
+* [Drum machine](https://codepen.io/astulov/pen/qBBJvPK) from freeCodeCamp curriculum
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
