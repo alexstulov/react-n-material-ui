@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.scss";
+import "./Rapido.scss";
 import { FIELD_SIZE, FIELD_CHOICE_LIMIT } from "./constants";
 import {
   generateUniqueRandomList,

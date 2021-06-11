@@ -136,7 +136,7 @@ const useRequest = (request: () => Promise<any>) => {
       loading: true,
       error: false,
     }),
-    []
+    [emptyData]
   );
   const [dataState, setDataState] = useState(initialState);
   useEffect(() => {
@@ -164,7 +164,7 @@ const useRequest = (request: () => Promise<any>) => {
     return () => {
       cancelled = true;
     };
-  }, [request, initialState]);
+  }, [emptyData, request, initialState]);
 
   return dataState;
 };

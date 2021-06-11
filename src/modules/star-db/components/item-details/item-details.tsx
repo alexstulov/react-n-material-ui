@@ -1,65 +1,75 @@
-import React, { useState, useEffect } from 'react';
-import { ItemType } from '../../services/swapi-service';
+import React, { useState, useEffect, useCallback } from "react";
+import { ItemType } from "../../services/swapi-service";
 
-const Record = ({item, field, label}: {item?: ItemType; field: string; label: string;}) => {
-    // @ts-ignore
-    const value = item && item.hasOwnProperty(field) ? item[field] : '';
-    return (
-        <li className="list-group-item">
-            <span className="term">{label}: </span>
-            <span>{value}</span>
-        </li>
-    )
-}
+const Record = ({
+  item,
+  field,
+  label,
+}: {
+  item?: ItemType;
+  field: string;
+  label: string;
+}) => {
+  // @ts-ignore
+  const value = item && item.hasOwnProperty(field) ? item[field] : "";
+  return (
+    <li className="list-group-item">
+      <span className="term">{label}: </span>
+      <span>{value}</span>
+    </li>
+  );
+};
 
 export { Record };
 
 interface ItemDetailsType {
-    itemId: number;
-    getData: (itemId: number) => Promise<ItemType>;
-    getImageUrl: (item: ItemType) => string;
-    children: any;
-};
+  itemId: number;
+  getData: (itemId: number) => Promise<ItemType>;
+  getImageUrl: (item: ItemType) => string;
+  children: any;
+}
 
-const ItemDetails = ({itemId, getData, getImageUrl, children}: ItemDetailsType) => {
-    const [item, setItem] = useState<ItemType | null>(null);
-    const [image, setImage] = useState('');
+const ItemDetails = ({
+  itemId,
+  getData,
+  getImageUrl,
+  children,
+}: ItemDetailsType) => {
+  const [item, setItem] = useState<ItemType | null>(null);
+  const [image, setImage] = useState("");
 
-    const updateItem = () => {
-        if (!itemId || itemId < 1) {
-            return;
-        }
-
-        getData(itemId)
-        .then((item: ItemType) => {
-            setItem(item);
-            setImage(getImageUrl(item));
-        });
+  const updateItem = useCallback(() => {
+    if (!itemId || itemId < 1) {
+      return;
     }
 
-    useEffect(() => {
-        updateItem();
-    }, [itemId, getData, getImageUrl]);
+    getData(itemId).then((item: ItemType) => {
+      setItem(item);
+      setImage(getImageUrl(item));
+    });
+  }, [getImageUrl, itemId, getData]);
 
-    if (!item) {
-        return <span>Select an item from a list</span>;
-    }
+  useEffect(() => {
+    updateItem();
+  }, [itemId, updateItem, getData, getImageUrl]);
 
-    return (
-        <div className="item-details card">
-            <img className="item-image" src={image} alt="item"/>
-            <div className="card-body">
-                <h4>{item && item.name}</h4>
-                <ul className="list-group list-group-flush">
-                    {
-                        React.Children.map(children, (child) => {
-                            return React.cloneElement(child, {item});
-                        })
-                    }
-                </ul>
-            </div>
-        </div>
-    );
+  if (!item) {
+    return <span>Select an item from a list</span>;
+  }
+
+  return (
+    <div className="item-details card">
+      <img className="item-image" src={image} alt="item" />
+      <div className="card-body">
+        <h4>{item && item.name}</h4>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(children, (child) => {
+            return React.cloneElement(child, { item });
+          })}
+        </ul>
+      </div>
+    </div>
+  );
 };
 
 export default ItemDetails;
