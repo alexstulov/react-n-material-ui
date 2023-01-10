@@ -1,36 +1,36 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import {
-  makeStyles,
   useTheme,
   Theme,
   createStyles,
-} from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import Collapse from "@material-ui/core/Collapse";
-import { Link, Router, Route, Switch } from "react-router-dom";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
-import SendIcon from "@material-ui/icons/Send";
-import LogInIcon from "@material-ui/icons/LockOpen";
-import LogOutIcon from "@material-ui/icons/Lock";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+} from "@mui/material/styles";
+import { makeStyles } from 'tss-react/mui'
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
+import Collapse from "@mui/material/Collapse";
+import { Link, Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import DraftsIcon from "@mui/icons-material/Drafts";
+import SendIcon from "@mui/icons-material/Send";
+import LogInIcon from "@mui/icons-material/LockOpen";
+import LogOutIcon from "@mui/icons-material/Lock";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
 import UserForm from "./pages/UserForm";
 import PromiseComponent from "./pages/PromiseComponent";
 import GithubProfile from "./pages/GithubProfile";
@@ -44,15 +44,13 @@ import modules from "./modules";
 import { authenticationService } from "./services";
 import { PrivateRoute } from "./components/helpers";
 
-import { createBrowserHistory } from "history";
 import Game from "./components/tictactoe/Game";
 import FormikWithYup from "./components/formik/FormikYupExample";
 import { FormikExample } from "./components/formik";
-const history = createBrowserHistory();
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles: any = makeStyles()((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -124,7 +122,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function PersistentDrawerLeft() {
-  const classes = useStyles();
+  const {classes} = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -135,7 +133,6 @@ export default function PersistentDrawerLeft() {
 
   const logout = () => {
     authenticationService.logout();
-    history.push("/login");
   };
 
   const handleDrawerOpen = () => {
@@ -171,10 +168,12 @@ export default function PersistentDrawerLeft() {
     module.routes.forEach(
       (route: {
         name: string;
-        routeProps: { path: string; exact: boolean; component: React.FunctionComponent };
+        routeProps: { path: string; exact: boolean; element: any };
       }): void => {
         moduleRoutes.push(
-          <PrivateRoute key={route.name} {...route.routeProps} />
+          <Route key={route.name} {...route.routeProps} element={<PrivateRoute />}>
+            <Route index={false} {...route.routeProps}  />
+          </Route>
         );
         moduleLinks[module.name].push(
           <Link to={route.routeProps.path}>{route.name}</Link>
@@ -206,10 +205,8 @@ export default function PersistentDrawerLeft() {
       </div>
     );
   });
-
   return (
-    <Router history={history}>
-      {/* <div className={classes.root}> */}
+    <Router>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -360,31 +357,28 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <main className="App">
         <div className={classes.drawerHeader} />
-        <Switch>
-          {/* <Route path="/" component={Layout} exact /> */}
+        <Routes>
           <Route
             path="/"
-            component={() => (
+            element={(() => (
               <div style={{ textAlign: "center" }}>
                 <h2>Hello</h2>
               </div>
-            )}
-            exact
+            ))()}
           />
-          <Route path="/promise" component={PromiseComponent} />
-          <Route path="/react-hooks" component={Hooks} />
-          <Route path="/user-form" component={UserForm} />
-          <Route path="/formik" component={FormikExample} />
-          <Route path="/formik-yup" component={FormikWithYup} />
-          <Route path="/github-profile" component={GithubProfile} />
-          <Route path="/todo-list" component={TodoList} />
-          <Route path="/tic-tac-toe" component={Game} />
+          <Route path="/promise" element={<PromiseComponent />} />
+          <Route path="/react-hooks" element={<Hooks />} />
+          <Route path="/user-form" element={<UserForm />} />
+          <Route path="/formik" element={<FormikExample />} />
+          <Route path="/formik-yup" element={<FormikWithYup />} />
+          <Route path="/github-profile" element={<GithubProfile />} />
+          <Route path="/todo-list" element={<TodoList />} />
+          <Route path="/tic-tac-toe" element={<Game />} />
           {currentUser && moduleRoutes}
-          <Route path="/login" component={LoginPage} />
-          <Route component={Error} />
-        </Switch>
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<Error  />} />
+        </Routes>
       </main>
-      {/* </div> */}
-    </Router>
+      </Router>
   );
 }

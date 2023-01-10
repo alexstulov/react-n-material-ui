@@ -1,11 +1,12 @@
 import React from 'react';
-import { Card, CardActionArea, CardContent, CardActions, CardMedia, Typography, Button, makeStyles, Grid } from '@material-ui/core';
+import { Card, CardActionArea, CardContent, CardActions, CardMedia, Typography, Button, Grid } from '@mui/material/';
+import { makeStyles } from 'tss-react/mui'
 
 type GithubUserType = {
     avatar_url: string;
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles()({
     root: {
         maxWidth: 345,
     },
@@ -14,8 +15,8 @@ const useStyles = makeStyles({
     },
 });
 
-const GithubProfile: React.FunctionComponent = () => {
-    const classes = useStyles();
+const GithubProfile = () => {
+    const {classes} = useStyles();
     let [githubUser, setGithubUser] = React.useState<GithubUserType>({ avatar_url: 'https://picsum.photos/200/300' });
     let [userLink, setUserLink] = React.useState<string>('https://github.com/');
 
@@ -28,7 +29,7 @@ const GithubProfile: React.FunctionComponent = () => {
         try{
             const githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
             setGithubUser(await githubResponse.json());
-        } catch(error) {
+        } catch(error: any) {
             console.log(error.message);
         }
         
@@ -36,7 +37,7 @@ const GithubProfile: React.FunctionComponent = () => {
     })();
 
     return (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
             <Card className={classes.root}>
             <CardActionArea>
                 <CardMedia

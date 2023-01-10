@@ -53,6 +53,10 @@ const starDbWrapper = (Page: React.FunctionComponent) => () => {
   );
 };
 
+const WrappedPeoplePage = starDbWrapper(PeoplePage)
+const WrappedPlanetsPage = starDbWrapper(PlanetsPage)
+const WrappedStarshipsPage = starDbWrapper(StarshipsPage)
+
 export default () => {
   return {
     name: "Star DB",
@@ -61,7 +65,7 @@ export default () => {
         routeProps: {
           path: peoplePage.path,
           exact: true,
-          component: starDbWrapper(PeoplePage),
+          element: <WrappedPeoplePage />,
         },
         name: peoplePage.name,
       },
@@ -69,7 +73,7 @@ export default () => {
         routeProps: {
           path: planetsPage.path,
           exact: true,
-          component: starDbWrapper(PlanetsPage),
+          element: <WrappedPlanetsPage />,
         },
         name: planetsPage.name,
       },
@@ -77,7 +81,7 @@ export default () => {
         routeProps: {
           path: starshipsPage.path,
           exact: true,
-          component: starDbWrapper(StarshipsPage),
+          element: <WrappedStarshipsPage />,
         },
         name: starshipsPage.name,
       },

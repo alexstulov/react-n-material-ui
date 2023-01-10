@@ -1,6 +1,6 @@
 let users = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
 
-export function fakeLogin(url: string, opts: { headers: Headers | string[][] | Record<string, string> | undefined, method: string, body: string }) {
+export function fakeLogin(url: string, opts: any) {
     const isLoggedIn = opts.headers ? (opts.headers as any)['Authorization'] === 'Bearer fake-jwt-token' : false;
 
     return new Promise((resolve, reject) => {

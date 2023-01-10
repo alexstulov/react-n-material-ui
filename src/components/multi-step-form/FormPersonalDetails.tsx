@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import AppBar from '@material-ui/core/AppBar'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+import AppBar from '@mui/material/AppBar'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 
 type values = {
     occupation: string;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
 import './header.css';
-// import { Grid, Box } from '@material-ui/core';
-// import Typography from '@material-ui/core/Typography';
+// import { Grid, Box } from '@mui/material/';
+// import Typography from '@mui/material/Typography';
 
 type HeaderType = { toDo: number; done: number; };
 

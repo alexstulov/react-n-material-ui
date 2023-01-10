@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
+import AppBar from "@mui/material/AppBar";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Button from "@mui/material/Button";
 
 type values = {
   firstName: string;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress, Typography, Button, Grid, Box } from '@material-ui/core';
+import { CircularProgress, Typography, Button, Grid, Box } from '@mui/material/';
 
 const PromiseComponent: React.FunctionComponent = () => {
 
@@ -43,10 +43,10 @@ const PromiseComponent: React.FunctionComponent = () => {
     return (
         <div>
             <Grid container>
-                <Grid container item direction="row" justify="center">
+                <Grid container item direction="row" justifyContent="center">
                     <Button variant="contained" color="primary" onClick={sendRequest}>Send request</Button>
                 </Grid>
-                <Grid container item direction="row" justify="center">
+                <Grid container item direction="row" justifyContent="center">
                     <Box mt={2}>
                         {data ? <Typography variant="h3">{data}</Typography> : <CircularProgress />}
                     </Box>

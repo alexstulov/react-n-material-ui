@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import AppBar from '@material-ui/core/AppBar'
+import AppBar from '@mui/material/AppBar'
 
 export default class Success extends Component <{}, {}> {
     render() {

@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { RouteComponentProps } from "react-router-dom";
+import {redirect} from 'react-router-dom'
 import * as Yup from "yup";
 
 import { authenticationService } from "../services";
 
-export default class LoginPage extends Component<RouteComponentProps, {}>{
-  constructor(props: RouteComponentProps) {
+export default class LoginPage extends Component<any, {}>{
+  constructor(props: any) {
     super(props);
 
     if (authenticationService.currentUserValue) {
-      this.props.history.push("/");
+      redirect('/')
     }
   }
 

@@ -29,7 +29,7 @@ export default () => {
         routeProps: {
           path: `${basePath}`,
           exact: true,
-          component: DrumMachine,
+          element: <DrumMachine />,
         },
         name: "Drum machine",
       },

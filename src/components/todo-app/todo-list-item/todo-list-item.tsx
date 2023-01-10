@@ -1,7 +1,7 @@
 import React from "react";
 import "./todo-list-item.css";
 import { Button, Col, Row } from "reactstrap";
-import {TrashIcon, ZapIcon} from '@primer/octicons-react';
+import {Delete as TrashIcon, ElectricBolt as ZapIcon} from '@mui/icons-material';
 
 type TodoListItemType = {
   label: string;

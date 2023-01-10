@@ -30,17 +30,18 @@ const reStoreWrapper = (Page: React.FunctionComponent) => () => {
     <Provider store={store}>
       <ErrorBoundary>
         <BookStoreServiceProvider value={bookStoreService}>
-          <Router>
             <main role="main" className="container">
               <ShopHeader />
               <Page />
             </main>
-          </Router>
         </BookStoreServiceProvider>
       </ErrorBoundary>
     </Provider>
   );
 };
+
+const WrappedHomePage = reStoreWrapper(HomePage)
+const WrappedCartPage = reStoreWrapper(CartPage)
 
 export default () => {
     return {
@@ -50,7 +51,7 @@ export default () => {
                 routeProps: {
                     path: shopPage.path,
                     exact: true,
-                    component: reStoreWrapper(HomePage),
+                    element: <WrappedHomePage />,
                 },
                 name: shopPage.name
             },
@@ -58,7 +59,7 @@ export default () => {
                 routeProps: {
                     path: cartPage.path,
                     exact: true,
-                    component: reStoreWrapper(CartPage),
+                    element: <WrappedCartPage />,
                 },
                 name: cartPage.name
             }

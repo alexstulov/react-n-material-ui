@@ -21,7 +21,7 @@ export default () => {
         routeProps: {
           path: `${basePath}`,
           exact: true,
-          component: RapidoC,
+          element: <RapidoC />,
         },
         name: "Rapido",
       },
